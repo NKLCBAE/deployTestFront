@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Routes, Route, Navigate } from "react-router-dom";
+import Schedule from "./Schedule";
+import Calendar from "./Calendar";
 
 function App() {
+let today = new Date();   
+
+let yyyy = today.getFullYear(); // 년도
+let mm = today.getMonth() + 1;  // 월
+if((mm+"").length === 1){
+  mm = "0"+mm;
+}
+let dd = today.getDate();  // 날짜
+if((dd+"").length === 1){
+  dd = "0"+dd;
+}
+today = yyyy + '-' + mm + '-' + dd
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Routes>
+        <Route path="/" element={<Navigate to={`/schedule/${today}`}replace/>} />
+        <Route path="/schedule/:date" element={<Schedule/>} />
+        <Route path="/calendar/:yyyymm" element={<Calendar/>} />
+      </Routes>
   );
 }
 
